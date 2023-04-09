@@ -1,14 +1,17 @@
-import { Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 @Schema()
 export class Pregunta extends Document {
-  tipoPregunta: string;
-  tipoAtaque: string;
-  peso: number;
+  @Prop({ required: true })
+  tipoPregunta: string[];
+  @Prop({ required: true })
+  tipoAtaque: string[];
+  @Prop({ required: true })
   descripcion: string;
-  orden: number;
+  @Prop({ required: false })
   propuesta: string;
+  @Prop({ required: false })
   nist: string;
 }
 

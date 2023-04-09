@@ -1,5 +1,12 @@
+import { IsNotEmpty } from 'class-validator';
+
 export class CreateRespuestaDto {
-  descripcionRes: string;
+  @IsNotEmpty()
   valor: number;
+
+  @IsNotEmpty()
   orden: number;
+
+  @IsNotEmpty()
+  idPregunta: string;
 }

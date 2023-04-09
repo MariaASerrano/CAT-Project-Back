@@ -6,18 +6,28 @@ import {
   Patch,
   Param,
   Delete,
+  Req,
 } from '@nestjs/common';
 import { RespuestasService } from './respuestas.service';
 import { CreateRespuestaDto } from './dto/create-respuesta.dto';
 import { UpdateRespuestaDto } from './dto/update-respuesta.dto';
+import { Request } from 'express';
 
 @Controller('respuestas')
 export class RespuestasController {
   constructor(private readonly respuestasService: RespuestasService) {}
 
   @Post()
-  create(@Body() createRespuestaDto: CreateRespuestaDto) {
-    return this.respuestasService.create(createRespuestaDto);
+  create(@Req() request: Request) {
+    const createRespuestaDto = request.body;
+    const idEmpresa = (request.headers['authorization'] as string).replace(
+      'Bearer ',
+      '',
+    );
+    return this.respuestasService.create({
+      idEmpresa: idEmpresa,
+      ...createRespuestaDto,
+    });
   }
 
   @Get()

@@ -17,7 +17,13 @@ export class PreguntasController {
 
   @Post()
   create(@Body() createPreguntaDto: CreatePreguntaDto) {
+    console.log(createPreguntaDto);
     return this.preguntasService.create(createPreguntaDto);
+  }
+
+  @Post('many')
+  createMany(@Body() createPreguntaDto: CreatePreguntaDto[]) {
+    return this.preguntasService.createMany(createPreguntaDto);
   }
 
   @Get()
@@ -27,7 +33,7 @@ export class PreguntasController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.preguntasService.findOne(+id);
+    return this.preguntasService.findOne(id);
   }
 
   @Patch(':id')
@@ -35,11 +41,11 @@ export class PreguntasController {
     @Param('id') id: string,
     @Body() updatePreguntaDto: UpdatePreguntaDto,
   ) {
-    return this.preguntasService.update(+id, updatePreguntaDto);
+    return this.preguntasService.update(id, updatePreguntaDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.preguntasService.remove(+id);
+    return this.preguntasService.remove(id);
   }
 }

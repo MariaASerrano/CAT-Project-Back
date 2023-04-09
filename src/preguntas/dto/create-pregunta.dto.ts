@@ -1,9 +1,18 @@
+import { IsNotEmpty, IsOptional } from 'class-validator';
+
 export class CreatePreguntaDto {
-  tipoPregunta: string;
-  tipoAtaque: string;
-  peso: number;
+  @IsNotEmpty()
+  tipoPregunta: string[];
+
+  @IsNotEmpty()
+  tipoAtaque: string[];
+
+  @IsNotEmpty()
   descripcion: string;
-  orden: number;
+
+  @IsOptional()
   propuesta: string;
+
+  @IsOptional()
   nist: string;
 }

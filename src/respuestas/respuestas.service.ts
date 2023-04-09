@@ -1,26 +1,72 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreateRespuestaDto } from './dto/create-respuesta.dto';
 import { UpdateRespuestaDto } from './dto/update-respuesta.dto';
+import { Respuesta } from './entities/respuesta.entity';
 
 @Injectable()
 export class RespuestasService {
-  create(createRespuestaDto: CreateRespuestaDto) {
-    return 'This action adds a new respuesta';
+  constructor(
+    @InjectModel(Respuesta.name)
+    private readonly RespuestaModel: Model<Respuesta>,
+  ) {}
+
+  async create(createRespuestaDto: CreateRespuestaDto) {
+    try {
+      const pregunta = await this.RespuestaModel.create(createRespuestaDto);
+      return pregunta;
+    } catch (error) {
+      this.handleExceptions(error);
+    }
   }
 
-  findAll() {
-    return `This action returns all respuestas`;
+  async findAll() {
+    const preguntas = await this.RespuestaModel.find();
+    return preguntas;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} respuesta`;
+  async findOne(id: number) {
+    const pregunta = await this.RespuestaModel.findById(id);
+
+    if (!pregunta)
+      throw new NotFoundException(`Pregunta with id ${id} not found`);
+
+    return pregunta;
   }
 
-  update(id: number, updateRespuestaDto: UpdateRespuestaDto) {
-    return `This action updates a #${id} respuesta`;
+  async update(id: number, updateRespuestaDto: UpdateRespuestaDto) {
+    const pregunta = await this.RespuestaModel.findById(id);
+    try {
+      await pregunta.updateOne(updateRespuestaDto);
+      return { ...pregunta.toJSON(), ...updateRespuestaDto };
+    } catch (error) {
+      this.handleExceptions(error);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} respuesta`;
+  async remove(id: number) {
+    const { deletedCount } = await this.RespuestaModel.deleteOne({ _id: id });
+    if (deletedCount === 0)
+      throw new BadRequestException(`Pregunta with id "${id}" not found`);
+
+    return;
+  }
+
+  private handleExceptions(error: any) {
+    if (error.code === 11000) {
+      throw new BadRequestException(
+        `Respuesta exists in db ${JSON.stringify(error.keyValue)}`,
+      );
+    }
+    console.log(error);
+    throw new InternalServerErrorException(
+      `Can't create Respuesta - Check server logs`,
+    );
   }
 }
