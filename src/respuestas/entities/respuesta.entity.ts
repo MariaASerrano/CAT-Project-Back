@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
+import { Empresa } from 'src/empresa/entities/empresa.entity';
+import { Pregunta } from 'src/preguntas/entities/pregunta.entity';
 
 @Schema()
 export class Respuesta extends Document {
@@ -7,10 +9,10 @@ export class Respuesta extends Document {
   valor: number;
   @Prop({ required: false })
   orden: number;
-  @Prop({ required: true })
-  idPregunta: string;
-  @Prop({ required: true })
-  idEmpresa: string;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Pregunta' })
+  idPregunta: Pregunta;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Empresa' })
+  idEmpresa: Empresa;
 }
 
 export const RespuestaSchema = SchemaFactory.createForClass(Respuesta);
