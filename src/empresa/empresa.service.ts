@@ -48,7 +48,7 @@ export class EmpresaService {
     return empresas;
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const empresa = await this.EmpresaModel.findById(id);
 
     if (!empresa)

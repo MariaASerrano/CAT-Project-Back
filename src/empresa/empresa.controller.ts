@@ -35,7 +35,7 @@ export class EmpresaController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.empresaService.findOne(+id);
+    return this.empresaService.findOne(id);
   }
 
   @Patch()
