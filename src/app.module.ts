@@ -4,9 +4,11 @@ import { AuthModule } from './auth/auth.module';
 import { EmpresaModule } from './empresa/empresa.module';
 import { PreguntasModule } from './preguntas/preguntas.module';
 import { RespuestasModule } from './respuestas/respuestas.module';
+import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/cat'),
+    ConfigModule.forRoot(),
+    MongooseModule.forRoot(process.env.MONGO_URI),
 
     AuthModule,
 
