@@ -23,7 +23,7 @@ env:
   GKE_ZONE: us-central1   # TODO: update to cluster zone
   DEPLOYMENT_NAME: gke-test # TODO: update to deployment name
   REPOSITORY: cat-image # TODO: update to Artifact Registry docker repository
-  IMAGE: static-site
+  IMAGE: 2e8f6a5c7f0c4
 
 jobs:
   setup-build-publish-deploy:
