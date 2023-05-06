@@ -22,8 +22,8 @@ env:
   GKE_CLUSTER: autopilot-cluster-1    # TODO: update to cluster name
   GKE_ZONE: us-central1   # TODO: update to cluster zone
   DEPLOYMENT_NAME: gke-test # TODO: update to deployment name
-  REPOSITORY: cat-image # TODO: update to Artifact Registry docker repository
-  IMAGE: 2e8f6a5c7f0c4
+  REPOSITORY: cat-docker-repo # TODO: update to Artifact Registry docker repository
+  IMAGE: cat-image
 
 jobs:
   setup-build-publish-deploy:
