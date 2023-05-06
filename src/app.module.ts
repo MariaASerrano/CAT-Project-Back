@@ -9,7 +9,7 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     ConfigModule.forRoot(),
     MongooseModule.forRoot(
-      'mongodb+srv://arrow:arrow@cat.t7dkvom.mongodb.net/',
+      'mongodb+srv://arrow:arrow@cat.t7dkvom.mongodb.net/cat',
     ),
 
     AuthModule,
